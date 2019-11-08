@@ -76,7 +76,7 @@ function(verb = "GET",
         if (isTRUE(verbose)) {
             message(sprintf("Checking bucket region using get_location('%s')", bucketname))
         }
-        bucketregion <- get_region(x = bucket, key = key, secret = secret, session_token = session_token, ...)
+        bucketregion <- get_region(x = bucket, key = key, secret = secret, session_token = session_token, headers=headers, request_body=request_body, write_disk=write_disk, accelerate=accelerate, dualstack=dualstack, parse_response=parse_response, url_style=url_style, base_url=base_url, verbose=verbose, show_progress=show_progress, region=region, use_https=use_https, ...)
         if (!is.null(bucketregion) && bucketregion != "") {
             region <- bucketregion
         }
