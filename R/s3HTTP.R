@@ -76,7 +76,7 @@ function(verb = "GET",
         if (isTRUE(verbose)) {
             message(sprintf("Checking bucket region using get_location('%s')", bucketname))
         }
-        bucketregion <- get_region(x = bucket, key = key, secret = secret, session_token = session_token, headers=headers, request_body=request_body, write_disk=write_disk, accelerate=accelerate, dualstack=dualstack, parse_response=parse_response, url_style=url_style, base_url=base_url, verbose=verbose, show_progress=show_progress, region=region, use_https=use_https, ...)
+        bucketregion <- get_region(x = bucket, key = key, secret = secret, session_token = session_token, headers=headers, request_body=request_body, write_disk=write_disk, accelerate=accelerate, dualstack=dualstack, url_style=url_style, base_url=base_url, verbose=verbose, show_progress=show_progress, region=region, use_https=use_https, ...)
         if (!is.null(bucketregion) && bucketregion != "") {
             region <- bucketregion
         }
@@ -221,7 +221,7 @@ parse_aws_s3_response <- function(r, Sig, verbose = getOption("verbose")){
         message("Parsing AWS API response")
     }
     ctype <- httr::headers(r)[["content-type"]]
-    if (is.null(ctype) || ctype == "application/xml"){
+    if (is.null(ctype) || grepl("application/xml", ctype, fixed = TRUE)){
         content <- httr::content(r, as = "text", encoding = "UTF-8")
         if (content != "") {
             response_contents <- xml2::as_list(xml2::read_xml(content))
