@@ -42,14 +42,14 @@ function(verb = "GET",
          parse_response = TRUE, 
          check_region = FALSE,
          url_style = c("path", "virtual"),
-         base_url = Sys.getenv("AWS_S3_ENDPOINT", "s3.amazonaws.com"),
+         base_url = sub("^https?://", "", Sys.getenv("AWS_S3_ENDPOINT", "https://s3.amazon.com")),
          verbose = getOption("verbose", FALSE),
          show_progress = getOption("verbose", FALSE),
          region = NULL, 
          key = NULL, 
          secret = NULL, 
          session_token = NULL,
-         use_https = TRUE,
+         use_https = startsWith(Sys.getenv("AWS_S3_ENDPOINT", "https://s3.amazon.com"), "https"),
          ...) {
     
     # locate and validate credentials
